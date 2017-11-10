@@ -414,7 +414,7 @@ matrix DoolittleDecomposition(const matrix ar,const matrix br)
         }
     }
     matrix ans=matrix(r,c,data);
-    cout<<ans;
+//    cout<<ans;
     //求解过程
     for(int i=0;i<c;i++)
     {
@@ -502,8 +502,10 @@ double matrix::max_eig(double error, double trans)
     }
 //    cout<<*this<<a;
     double *b=new double[row];
-    memset(b,0,row*sizeof(double));
-    b[0]=1;
+//    memset(b,0,row*sizeof(double));
+//    b[0]=1;
+    for(int i=0;i<column;i++)
+        b[i]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;
@@ -522,6 +524,7 @@ double matrix::max_eig(double error, double trans)
             beta2+=y.TakeElem(i,0)*u.TakeElem(i,0);
         //cout<<"new beta"<<beta1<<" "<<beta2<<endl;
     }while(fabs((beta2-beta1)/beta2)>=error);
+    cout<<y;
     delete[] b;
     return beta2;
 }
@@ -537,8 +540,8 @@ double matrix::min_eig(double error,double trans)
     }
 //    cout<<*this<<a;
     double *b=new double[row];
-    memset(b,0,row*sizeof(double));
-    b[0]=1;
+    for(int i=0;i<column;i++)
+        b[i]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;

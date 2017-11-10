@@ -60,8 +60,9 @@ ostream& operator<<(ostream& o,bandmatrix& m)//overload the cout
     o<<m.getRow()<<" "<<m.getColumn()<<" "<<m.getWidth()<<" "<<m.getWidthUp()<<" "<<endl;
     for(int i=0;i<m.getColumn()*m.getWidth();i++,p++)
     {
-        o<<*p<<" ";
+
         if(i%m.getColumn()==0)o<<endl;
+        o<<*p<<" ";
     }
     return o;
 }
@@ -126,6 +127,7 @@ bandmatrix bandmatrix::DoolittleLU()
             a.data[(i-k+s)*n+k]=(a.data[(i-k+s)*n+k]-m)/a.data[s*n+k];
         }
     }
+//    cout<<a;
     return a;
 }
 
@@ -168,8 +170,8 @@ double bandmatrix::max_eig(double error, double trans)
            a.data[s*column+i]=data[s*column+i]-trans;
     }
     double *b=new double[row];
-    memset(b,0,row*sizeof(double));
-    b[0]=1;
+    for(int i=0;i<column;i++)
+        b[i]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;
@@ -202,8 +204,8 @@ double bandmatrix::min_eig(double error, double trans)
            a.data[s*column+i]=data[s*column+i]-trans;
     }
     double *b=new double[row];
-    memset(b,0,row*sizeof(double));
-    b[0]=1;
+    for(int i=0;i<column;i++)
+        b[i]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;

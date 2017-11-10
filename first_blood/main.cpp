@@ -22,10 +22,11 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    double data[501*5]={0},b,c;
+    double data[501*501]={0},b,c;
     int row,column,width,width_up;
     double lamda_1,lamda_501,lamda_max,lamda_s,mu[40],lamda_ik[40],cond_A2,det_A;
     bandmatrix A;
+    matrix B;
 
     c=-0.064;
     b=0.16;
@@ -58,9 +59,12 @@ int main(int argc, char *argv[])
         fin>>row>>column>>width>>width_up;
         for(int i=0;i<501*5;i++)
             fin>>data[i];
+//        for(int i=0;i<row*column;i++)
+//            fin>>data[i];
+//        B=matrix(row,column,data);
         A=bandmatrix(row,column,width,width_up,data);
     }
-
+//    matrix B=A.band2mat();
 
     lamda_max=lamda_1=A.max_eig(1e-12,0);
     lamda_501=A.max_eig(1e-12,lamda_1)+lamda_1;
@@ -80,6 +84,8 @@ int main(int argc, char *argv[])
 
     cond_A2=fabs(lamda_max/lamda_s);
     det_A=A.detmatrix();
+
+    cout<< setiosflags(ios::uppercase)<<setiosflags(ios::scientific)<<setprecision(11);
     cout<<"lamda1: "<<lamda_1<<endl;
     cout<<"lamda501: "<<lamda_501<<endl;
     cout<<"lamda_s: "<<lamda_s<<endl;
