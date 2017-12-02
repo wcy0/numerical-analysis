@@ -30,7 +30,6 @@ public:
     friend matrix DoolittleDecomposition(bandmatrix ,matrix); //带状doolittle分解法
     double max_eig(double, double);//按模最大特征值
     double min_eig(double, double);//按模最小特征值
-    matrix eig_Jacobi(double);
     matrix band2mat();
     double detmatrix();
 

@@ -108,7 +108,7 @@ bandmatrix bandmatrix::DoolittleLU()
             m=0;
             int t=k-r>0?k-r:0;
             if(t<j-s)t=j-s;
-            for(;t<=k-1;t++)
+            for(;t<k;t++)
             {
                 m+=a.data[(k+s-t)*n+t]*a.data[(t+s-j)*n+j];
             }
@@ -118,16 +118,15 @@ bandmatrix bandmatrix::DoolittleLU()
         for(int i=k+1;i<n&&i<=k+r;i++)
         {
             m=0;
-            int t=i-r>1?i-r:1;
+            int t=i-r>0?i-r:0;
             if(t<k-s)t=k-s;
-            for(;t<=k-1;t++)
+            for(;t<k;t++)
             {
                 m+=a.data[(i-t+s)*n+t]*a.data[(t-k+s)*n+k];
             }
             a.data[(i-k+s)*n+k]=(a.data[(i-k+s)*n+k]-m)/a.data[s*n+k];
         }
     }
-//    cout<<a;
     return a;
 }
 
@@ -172,6 +171,7 @@ double bandmatrix::max_eig(double error, double trans)
     double *b=new double[row];
     for(int i=0;i<column;i++)
         b[i]=1;
+//    b[0]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;
@@ -206,6 +206,7 @@ double bandmatrix::min_eig(double error, double trans)
     double *b=new double[row];
     for(int i=0;i<column;i++)
         b[i]=1;
+//    b[0]=1;
     matrix u(row,1,b);
     eta=u.norm('f');
     matrix y;
@@ -245,6 +246,9 @@ double bandmatrix::detmatrix()
     double ans=1,*p=NULL;
     p=a.data+width_up*column;
     for(int i=0;i<column;i++,p++)
+    {
+//        cout<<*p<<" ";
         ans *= *p;
+    }
     return ans;
 }
